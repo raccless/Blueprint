@@ -11,6 +11,7 @@ create_file()
   fi
 }
 
+
 create_directory()
 {
   if [[ -d "$1" ]]; then
@@ -20,6 +21,24 @@ create_directory()
     echo "Created Directory $1"
   fi
 }
+
+
+processing_and_splitting()
+{
+  line="$1"
+  parts=(${=line})
+
+    if [[ "$parts[1]" == "f" ]]; then
+        create_file "$parts[2]"
+
+    elif [[ "$parts[1]" == "d" ]]; then
+        create_directory "$parts[2]"
+
+    else
+        echo "Wrong input"
+    fi
+}
+
 
 if [[ $1 == 1 ]]; then
   for name in "${@:2}"
