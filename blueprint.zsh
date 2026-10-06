@@ -12,14 +12,12 @@ create_file()
 }
 
 if [[ $1 == 1 ]]; then
-  echo "Give me some file names (+ extentions)"
   for name in "${@:2}"
   do
     create_file "$name"
   done
 
 elif [[ $1 == 2 ]]; then
-  echo "Enter the filename: "
   read filename
   if [[ -f "$filename" ]]; then
     while read line
