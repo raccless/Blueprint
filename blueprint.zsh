@@ -55,6 +55,12 @@ processing_and_splitting()
 
 if [[ $1 == 1 ]]; then
   mode=""
+
+  if [[ $# -lt 3 ]]; then
+    echo "Usage: $0 1 f <files...> d <directories...>"
+    return
+  fi
+  
   for argument in "${@:2}"
   do
 
