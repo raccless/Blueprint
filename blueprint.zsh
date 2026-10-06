@@ -52,8 +52,9 @@ processing_and_splitting()
   fi
 }
 
-mode=""
+
 if [[ $1 == 1 ]]; then
+  mode=""
   for argument in "${@:2}"
   do
 
@@ -69,6 +70,16 @@ if [[ $1 == 1 ]]; then
       echo "Argument: $argument"
       echo "Mode: $mode"
   
+      if [[ "$mode" == "file" ]]; then
+        create_file "$argument"
+
+      elif [[ "$mode" == "directory" ]]; then
+        create_directory "$argument"
+
+      else
+        echo "No Type (directory or file) selected, choose via d or f"
+      fi
+
     fi  
   done
 
