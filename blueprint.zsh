@@ -26,7 +26,6 @@ create_directory()
   fi
 }
 
-
 processing_and_splitting()
 {
   line="$1"
@@ -53,11 +52,24 @@ processing_and_splitting()
   fi
 }
 
-
+mode=""
 if [[ $1 == 1 ]]; then
   for argument in "${@:2}"
   do
-    echo "$argument"
+
+    if [[ "$argument" == "f" ]]; then
+      mode="file"
+      echo "Mode changed to File..."
+
+    elif [[ "$argument" == "d" ]]; then
+      mode="directory"
+      echo "Mode changed to Directory..."
+
+    else
+      echo "Argument: $argument"
+      echo "Mode: $mode"
+  
+    fi  
   done
 
 elif [[ $1 == 2 ]]; then
