@@ -31,29 +31,33 @@ processing_and_splitting()
 {
   line="$1"
 
+  # guard clause to check if line is empty or not
   if [[ -z "$line" ]]; then
-    echo "Empty line... do nothing"
+    echo "Empty Line..."
+    return # maybe remove later if it randomly terminates
   fi
-  
+ 
+  # if the line is not empty then we can part the command, its more efficient
   parts=(${=line})
 
-  if [[ "$parts[1]" == "f" ]]; then
+  # if the first part of the command is either f (file) or d (directory) and the last part isnt empty we continue
+  if [[ "$parts[1]" == "f" && -n "$parts[2]" ]]; then
       create_file "$parts[2]"
 
-  elif [[ "$parts[1]" == "d" ]]; then
+  elif [[ "$parts[1]" == "d" && -n "$parts[2]" ]]; then
       create_directory "$parts[2]"
 
   else
-      echo "Wrong input"
+      echo "Wrong input on line: $line"
   
   fi
 }
 
 
 if [[ $1 == 1 ]]; then
-  for name in "${@:2}"
+  for argument in "${@:2}"
   do
-    create_file "$name"
+    echo "$argument"
   done
 
 elif [[ $1 == 2 ]]; then
