@@ -8,5 +8,5 @@ manual entries or from a `.txt` blueprint file.
 - [x] Add folder and directory structure support
 - [ ] Add scanning existing folder structures and output to structured file
 - [ ] Add removal support for files and directories
-- [ ] Add full structure generation from a blueprint
-- [ ] Add safeguards for destructive operations
+- [x] Add full structure generation from a blueprint
+- [x] Add safeguards for destructive operations
