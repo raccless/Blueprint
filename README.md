@@ -5,7 +5,8 @@ manual entries or from a `.txt` blueprint file.
 
 ### Roadmap
 
-- [ ] Add folder and directory structure support
+- [x] Add folder and directory structure support
+- [ ] Add scanning existing folder structures and output to structured file
 - [ ] Add removal support for files and directories
 - [ ] Add full structure generation from a blueprint
 - [ ] Add safeguards for destructive operations
