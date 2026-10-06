@@ -27,8 +27,9 @@ processing_and_splitting()
 {
   line="$1"
   parts=(${=line})
-
-    if [[ "$parts[1]" == "f" ]]; then
+    if [[ -z "$line" ]]; then
+      echo "Empty line... do nothing"
+    elif [[ "$parts[1]" == "f" ]]; then
         create_file "$parts[2]"
 
     elif [[ "$parts[1]" == "d" ]]; then
@@ -50,7 +51,7 @@ elif [[ $1 == 2 ]]; then
   if [[ -f "$2" ]]; then
     while read line
     do
-      create_file "$line"
+      processing_and_splitting "$line"
     done < "$2"
   else
     echo "File does not exist."
