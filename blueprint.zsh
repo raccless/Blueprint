@@ -11,6 +11,16 @@ create_file()
   fi
 }
 
+create_directory()
+{
+  if [[ -d "$1" ]]; then
+    echo "$1 already exists."
+  else
+    mkdir -p "$1"
+    echo "Created Directory $1"
+  fi
+}
+
 if [[ $1 == 1 ]]; then
   for name in "${@:2}"
   do
@@ -18,12 +28,11 @@ if [[ $1 == 1 ]]; then
   done
 
 elif [[ $1 == 2 ]]; then
-  read filename
-  if [[ -f "$filename" ]]; then
+  if [[ -f "$2" ]]; then
     while read line
     do
       create_file "$line"
-    done < "$filename"
+    done < "$2"
   else
     echo "File does not exist."
   fi
