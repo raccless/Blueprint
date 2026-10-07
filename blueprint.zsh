@@ -90,6 +90,12 @@ if [[ $1 == 1 ]]; then
   done
 
 elif [[ $1 == 2 ]]; then
+
+  if [[ -z "$2" ]]; then
+    echo "Usage: $0 2 [file.txt]"
+    exit 1
+  fi
+
   if [[ -f "$2" ]]; then
   
     while read line
@@ -98,7 +104,7 @@ elif [[ $1 == 2 ]]; then
     done < "$2"
 
   else
-    echo "File does not exist."
+    echo "File $2 does not exist."
   fi
 
 else
