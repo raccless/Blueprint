@@ -2,6 +2,7 @@
 
 create_file()
 {
+  # checks if file already exists 
   if [[ -e "$1" ]]; then
     echo "$1 already exists."
   
@@ -16,6 +17,7 @@ create_file()
 
 create_directory()
 {
+  # checks if directory already exists
   if [[ -d "$1" ]]; then
     echo "$1 already exists."
 
@@ -56,6 +58,7 @@ processing_and_splitting()
 if [[ $1 == 1 ]]; then
   mode=""
 
+  # checks for correct usage of blueprint 1 command
   if [[ $# -lt 3 ]]; then
     echo "Usage: $0 1 f <files...> d <directories...>"
     exit
@@ -91,11 +94,13 @@ if [[ $1 == 1 ]]; then
 
 elif [[ $1 == 2 ]]; then
 
+  # checks if anything is given to command blueprint 2
   if [[ -z "$2" ]]; then
     echo "Usage: $0 2 [file.txt]"
     exit 1
   fi
 
+  # checks if the file exists or is empty
   if [[ -f "$2" ]]; then
   
     while read line
