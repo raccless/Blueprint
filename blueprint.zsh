@@ -141,6 +141,7 @@ elif [[ "$1" == "scan" ]]; then
 
   : > "$output_file"
   scan_directory "$2" "$output_file"
+  echo "Structure written to $output_file"
 
 else
   echo "Usage:"
