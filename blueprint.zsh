@@ -34,7 +34,11 @@ scan_directory()
 
   for item in "$directory"/*
   do
-    echo "$item"
+    if [[ -f "$item" ]]; then
+      echo "f $item"
+    elif [[ -d "$item" ]]; then
+      echo "d $item"
+    fi
   done
 
 }
