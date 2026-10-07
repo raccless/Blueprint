@@ -31,13 +31,22 @@ create_directory()
 scan_directory()
 {
   directory="$1"
+  output_file="$2"
 
   for item in "$directory"/*
   do
+    
+    # check if the directory has the structure.txt inside
+    if [[ "$item" == "$output_file" ]]; then
+      continue
+    fi
+    
     if [[ -f "$item" ]]; then
-      echo "f $item"
+      echo "f $item" >> "$output_file"
+
     elif [[ -d "$item" ]]; then
-      echo "d $item"
+      echo "d $item" >> "$output_file"
+      scan_directory "$item" "$output_file"
     fi
   done
 
