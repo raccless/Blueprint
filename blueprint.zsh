@@ -28,6 +28,17 @@ create_directory()
   fi
 }
 
+scan_directory()
+{
+  directory="$1"
+
+  for item in "$directory"/*
+  do
+    echo "$item"
+  done
+
+}
+
 processing_and_splitting()
 {
   line="$1"
@@ -111,6 +122,9 @@ elif [[ $1 == 2 ]]; then
   else
     echo "File $2 does not exist."
   fi
+
+elif [[ "$1" == "scan" ]]; then
+  scan_directory "$2"
 
 else
   echo "Usage:"
