@@ -137,7 +137,10 @@ elif [[ $1 == 2 ]]; then
   fi
 
 elif [[ "$1" == "scan" ]]; then
-  scan_directory "$2"
+  output_file="$2/structure.txt"
+
+  : > "$output_file"
+  scan_directory "$2" "$output_file"
 
 else
   echo "Usage:"
