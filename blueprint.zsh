@@ -134,7 +134,7 @@ processing_and_removing()
   fi
 }
 
-if [[ $1 == 1 ]]; then
+if [[ $1 == "line" ]]; then
   mode=""
 
   # checks for correct usage of blueprint 1 command
@@ -171,7 +171,7 @@ if [[ $1 == 1 ]]; then
     fi  
   done
 
-elif [[ $1 == 2 ]]; then
+elif [[ $1 == "file" ]]; then
 
   # checks if anything is given to command blueprint 2
   if [[ -z "$2" ]]; then
@@ -205,6 +205,9 @@ elif [[ "$1" == "test-remove" ]]; then
 else
   echo "Usage:"
   echo 
-  echo "$0 1 ..... enter file names manually"
-  echo "$0 2 ..... give a file with names"
+  echo "$0 line ..... enter file names manually"
+  echo "$0 file ..... give a file with names"
+  echo "$0 remove ... remove a blueprint structure"
+  echo "$0 scan ..... scan an existing structure"
+
 fi
