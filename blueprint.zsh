@@ -2,15 +2,24 @@
 
 create_file()
 {
+  local file="$1"
+
   # checks if file already exists 
-  if [[ -e "$1" ]]; then
-    echo "$1 already exists."
+  if [[ -e "$file" ]]; then
+    echo "$file already exists."
   
   else
-    echo "Creating file $1..."
-    touch "$1"
-    echo "Done!"
-  
+    echo "Creating file $file..."
+
+    
+    # ${file:h} is the folder part of the path (core/game.py -> core, main.py -> .)
+    # mkdir -p creates that folder first, so the order of the lines doesn't matter anymore
+    if mkdir -p "${file:h}" && touch "$file"; then
+      echo "Done!"
+    else
+      echo "Failed to create $file"
+    fi
+
   fi
 }
 
