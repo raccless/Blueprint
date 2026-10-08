@@ -204,16 +204,20 @@ elif [[ "$1" == "remove" ]]; then
     while read line
     do
       if [[ -n "$line" ]]; then
+        # this stores every blueprint line
         lines+=("$line")
       fi
     done < "$2"
 
     echo "Removing blueprint:"
-    print -l "${(@)lines[-1..1]}"
 
-    for line in print -l "${(@)lines[-1..1]}"
+    index=${#lines[@]}
+
+    # removes the blueprint line in reverse order
+    while [[ $index -gt 0 ]]
     do
-      processing_and_removing "$line"
+      processing_and_removing "${lines[$index]}"
+      ((index--))
     done
 
   else
@@ -227,10 +231,6 @@ elif [[ "$1" == "scan" ]]; then
   : > "$output_file"
   scan_directory "$2" "$output_file"
   echo "Structure written to $output_file"
-
-elif [[ "$1" == "test-remove" ]]; then
-  remove_file "$2"
-  remove_directory "$3"
 
 else
   echo "Usage:"
