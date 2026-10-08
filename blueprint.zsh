@@ -103,6 +103,31 @@ processing_and_splitting()
   fi
 }
 
+processing_and_removing()
+{
+  line="$1"
+
+  # guard clause to check if line is empty or not
+  if [[ -z "$line" ]]; then
+    echo "Empty Line..."
+    return # maybe remove later if it randomly terminates
+  fi
+ 
+  # if the line is not empty then we can part the command, its more efficient
+  parts=(${=line})
+
+  # if the first part of the command is either f (file) or d (directory) and the last part isnt empty we continue
+  if [[ "$parts[1]" == "f" && -n "$parts[2]" ]]; then
+      remove_file "$parts[2]"
+
+  elif [[ "$parts[1]" == "d" && -n "$parts[2]" ]]; then
+      remove_directory "$parts[2]"
+
+  else
+      echo "Wrong input on line: $line"
+  
+  fi
+}
 
 if [[ $1 == 1 ]]; then
   mode=""
