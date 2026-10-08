@@ -78,6 +78,17 @@ processing_and_splitting()
   fi
 }
 
+remove_file()
+{
+  if [[ -f "$1" ]]; thne
+    echo "Removing file $1..."
+    rm "$1"
+    echo "Done!"
+  else
+    echo "$1 does not exist."
+  fi
+}
+
 
 if [[ $1 == 1 ]]; then
   mode=""
