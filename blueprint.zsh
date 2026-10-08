@@ -35,8 +35,10 @@ remove_file()
     echo "Removing file $1..."
     rm "$1"
     echo "Done!"
+  
   else
     echo "Failed to remove $1."
+ 
   fi
 }
 
@@ -47,8 +49,10 @@ remove_directory()
     echo "Removing directory $1..."
     rm -rf "$1"
     echo "Done!"
+
   else
     echo "Failed to remove $1."
+
   fi
 }
 
