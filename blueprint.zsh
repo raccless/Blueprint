@@ -26,27 +26,31 @@ create_file()
 
 create_directory()
 {
+  local directory="$1"
+
   # checks if directory already exists
-  if [[ -d "$1" ]]; then
-    echo "$1 already exists."
+  if [[ -d "$directory" ]]; then
+    echo "$directory already exists."
 
   else
-    mkdir -p "$1"
-    echo "Created Directory $1"
-  
+    mkdir -p "$directory"
+    echo "Created Directory $directory"
+
   fi
 }
 
 
 remove_file()
 {
-  if [[ -f "$1" ]]; then
-    echo "Removing file $1..."
-    rm "$1"
+  local file="$1"
+
+  if [[ -f "$file" ]]; then
+    echo "Removing file $file..."
+    rm "$file"
     echo "Done!"
   
   else
-    echo "Failed to remove $1."
+    echo "Failed to remove $file."
  
   fi
 }
@@ -54,13 +58,15 @@ remove_file()
 
 remove_directory()
 {
-  if [[ -d "$1" ]]; then
-    echo "Removing directory $1..."
-    rm -rf "$1"
+  local directory="$1"
+
+  if [[ -d "$directory" ]]; then
+    echo "Removing directory $directory..."
+    rm -rf "$directory"
     echo "Done!"
 
   else
-    echo "Failed to remove $1."
+    echo "Failed to remove $directory."
 
   fi
 }
