@@ -62,7 +62,7 @@ scan_directory()
   directory="$1"
   output_file="$2"
 
-  for item in "$directory"/*
+  for item in "$directory"/*(N)
   do
     
     # check if the directory has the structure.txt inside
