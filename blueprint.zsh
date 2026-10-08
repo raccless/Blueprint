@@ -31,12 +31,12 @@ create_directory()
 
 remove_file()
 {
-  if [[ -f "$1" ]]; thne
+  if [[ -f "$1" ]]; then
     echo "Removing file $1..."
     rm "$1"
     echo "Done!"
   else
-    echo "$1 does not exist."
+    echo "Failed to remove $1."
   fi
 }
 
@@ -45,10 +45,10 @@ remove_directory()
 {
   if [[ -d "$1" ]]; then
     echo "Removing directory $1..."
-    rm "$1"
+    rm -rf "$1"
     echo "Done!"
   else
-    echo "$1 does not exist."
+    echo "Failed to remove $1."
   fi
 }
 
@@ -167,6 +167,10 @@ elif [[ "$1" == "scan" ]]; then
   : > "$output_file"
   scan_directory "$2" "$output_file"
   echo "Structure written to $output_file"
+
+elif [[ "$1" == "test-remove" ]]; then
+  remove_file "$2"
+  remove_directory "$3"
 
 else
   echo "Usage:"
