@@ -89,6 +89,16 @@ remove_file()
   fi
 }
 
+remove_directory()
+{
+  if [[ -d "$1" ]]; then
+    echo "Removing directory $1..."
+    rm "$1"
+    echo "Done!"
+  else
+    echo "$1 does not exist."
+  fi
+}
 
 if [[ $1 == 1 ]]; then
   mode=""
