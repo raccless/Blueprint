@@ -239,11 +239,20 @@ elif [[ "$1" == "remove" ]]; then
 
 
 elif [[ "$1" == "scan" ]]; then
-  output_file="$2/structure.txt"
 
-  : > "$output_file"
-  scan_directory "$2" "$output_file"
-  echo "Structure written to $output_file"
+  # without this check an empty $2 would scan the whole system
+  if [[ ! -d "$2" ]]; then
+      echo "Usage: $0 scan [directory]"
+      exit 1
+  fi
+ 
+  # go into the folder first, so the paths in structure.txt
+  # are relative to it (core/game.py instead of someproject/core/game.py)
+  cd "$2" || exit 1
+
+  : > structure.txt
+  scan_directory "." "structure.txt"
+  echo "Structure written to $2/structure.txt"
 
 else
   echo "Usage:"
