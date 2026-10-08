@@ -208,6 +208,18 @@ elif [[ "$1" == "remove" ]]; then
       fi
     done < "$2"
 
+    echo "Removing blueprint:"
+    print -l "${(@)lines[-1..1]}"
+
+    for line in print -l "${(@)lines[-1..1]}"
+    do
+      processing_and_removing "$line"
+    done
+
+  else
+    echo "File $2 does not exist"
+  fi
+
 
 elif [[ "$1" == "scan" ]]; then
   output_file="$2/structure.txt"
