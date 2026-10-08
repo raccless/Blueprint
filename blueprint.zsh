@@ -200,7 +200,7 @@ elif [[ $1 == "file" ]]; then
   # even when the file doesn't end with a new line
   while read -r line || [[ -n "$line" ]]
   do
-    processs_line "create" "$line"
+    process_line "create" "$line"
   done < "$2"
 
 
