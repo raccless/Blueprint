@@ -106,56 +106,42 @@ scan_directory()
   done
 }
 
-processing_and_splitting()
+
+# action is either "create" or "remove", so one function can do both
+process_line()
 {
-  line="$1"
-
-  # guard clause to check if line is empty or not
-  if [[ -z "$line" ]]; then
-    echo "Empty Line..."
-    return # maybe remove later if it randomly terminates
-  fi
+    local action="$1"
+    local line="$2"
  
-  # if the line is not empty then we can part the command, its more efficient
-  parts=(${=line})
-
-  # if the first part of the command is either f (file) or d (directory) and the last part isnt empty we continue
-  if [[ "$parts[1]" == "f" && -n "$parts[2]" ]]; then
-      create_file "$parts[2]"
-
-  elif [[ "$parts[1]" == "d" && -n "$parts[2]" ]]; then
-      create_directory "$parts[2]"
-
-  else
-      echo "Wrong input on line: $line"
-  
-  fi
-}
-
-processing_and_removing()
-{
-  line="$1"
-
-  # guard clause to check if line is empty or not
-  if [[ -z "$line" ]]; then
-    echo "Empty Line..."
-    return # maybe remove later if it randomly terminates
-  fi
+    # f or d is the first character, the path is everything after "f " or "d "
+    # (this way paths with spaces work too)
+    local kind="${line[1]}"
+    local target="${line[3,-1]}"
  
-  # if the line is not empty then we can part the command, its more efficient
-  parts=(${=line})
-
-  # if the first part of the command is either f (file) or d (directory) and the last part isnt empty we continue
-  if [[ "$parts[1]" == "f" && -n "$parts[2]" ]]; then
-      remove_file "$parts[2]"
-
-  elif [[ "$parts[1]" == "d" && -n "$parts[2]" ]]; then
-      remove_directory "$parts[2]"
-
-  else
-      echo "Wrong input on line: $line"
-  
-  fi
+    # guard clause to check if line is empty or not
+    if [[ -z "$line" ]]; then
+        echo "Empty Line..."
+        return
+    fi
+ 
+    # a correct line looks like "f something" or "d something"
+    # the second character has to be a space and the path can't be empty
+    if [[ "${line[2]}" != " " || -z "$target" ]]; then
+        echo "Wrong input on line: $line"
+        return
+    fi
+ 
+    if [[ "$kind" == "f" && "$action" == "create" ]]; then
+        create_file "$target"
+    elif [[ "$kind" == "d" && "$action" == "create" ]]; then
+        create_directory "$target"
+    elif [[ "$kind" == "f" && "$action" == "remove" ]]; then
+        remove_file "$target"
+    elif [[ "$kind" == "d" && "$action" == "remove" ]]; then
+        remove_directory "$target"
+    else
+        echo "Wrong input on line: $line"
+    fi
 }
 
 if [[ $1 == "line" ]]; then
