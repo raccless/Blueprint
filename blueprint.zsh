@@ -74,27 +74,36 @@ remove_directory()
 
 scan_directory()
 {
-  directory="$1"
-  output_file="$2"
+  local directory="$1"
+  local output_file="$2"
+  local item
 
-  # the directory/*(N) means that in the directory can be anything (here a *) and also nothing (here the "N")
-  for item in "$directory"/*(N)
+  # * = anything, D = also match hidden files like .gitignore,
+  # N = if nothing matches (empty folder) give back nothing instead of an error
+  for item in "$directory"/*(DN)
   do
     
-    # If the current item ends in /structure.txt, skip it.
-    if [[ "$item" == */structure.txt ]]; then
+    # skip the outputfile itself.
+    if [[ "$item" == "./$output_file" ]]; then
       continue
     fi
 
+    # ${item:t} is the last part of the path (./core/game.py -> game.py)
+    # skip folders that would only add noise
+    if [[ "${item:t}" == ".git" || "${item:t}" == ".venv" || "${item:t}" == "__pycache__" ]]; then
+      continue
+    fi
+
+    # ${item#./} cuts the "./" off the front, so we get core/game.py
     if [[ -f "$item" ]]; then
-      echo "f $item" >> "$output_file"
+      echo "f ${item#./}" >> "$output_file"
 
     elif [[ -d "$item" ]]; then
-      echo "d $item" >> "$output_file"
+      echo "d ${item#./}" >> "$output_file"
       scan_directory "$item" "$output_file"
     fi
-  done
 
+  done
 }
 
 processing_and_splitting()
