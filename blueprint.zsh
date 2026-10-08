@@ -28,6 +28,31 @@ create_directory()
   fi
 }
 
+
+remove_file()
+{
+  if [[ -f "$1" ]]; thne
+    echo "Removing file $1..."
+    rm "$1"
+    echo "Done!"
+  else
+    echo "$1 does not exist."
+  fi
+}
+
+
+remove_directory()
+{
+  if [[ -d "$1" ]]; then
+    echo "Removing directory $1..."
+    rm "$1"
+    echo "Done!"
+  else
+    echo "$1 does not exist."
+  fi
+}
+
+
 scan_directory()
 {
   directory="$1"
@@ -78,27 +103,6 @@ processing_and_splitting()
   fi
 }
 
-remove_file()
-{
-  if [[ -f "$1" ]]; thne
-    echo "Removing file $1..."
-    rm "$1"
-    echo "Done!"
-  else
-    echo "$1 does not exist."
-  fi
-}
-
-remove_directory()
-{
-  if [[ -d "$1" ]]; then
-    echo "Removing directory $1..."
-    rm "$1"
-    echo "Done!"
-  else
-    echo "$1 does not exist."
-  fi
-}
 
 if [[ $1 == 1 ]]; then
   mode=""
