@@ -191,6 +191,24 @@ elif [[ $1 == "file" ]]; then
     echo "File $2 does not exist."
   fi
 
+elif [[ "$1" == "remove" ]]; then
+
+  if [[ -z "$2" ]]; then
+    echo "Usage: $0 remove [file.txt]"
+    exit 1
+  fi
+
+  if [[ -f "$2" ]]; then
+    lines=()
+
+    while read line
+    do
+      if [[ -n "$line" ]]; then
+        lines+=("$line")
+      fi
+    done < "$2"
+
+
 elif [[ "$1" == "scan" ]]; then
   output_file="$2/structure.txt"
 
