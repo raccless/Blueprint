@@ -62,14 +62,15 @@ scan_directory()
   directory="$1"
   output_file="$2"
 
+  # the directory/*(N) means that in the directory can be anything (here a *) and also nothing (here the "N")
   for item in "$directory"/*(N)
   do
     
-    # check if the directory has the structure.txt inside
-    if [[ "$item" == "$output_file" ]]; then
+    # If the current item ends in /structure.txt, skip it.
+    if [[ "$item" == */structure.txt ]]; then
       continue
     fi
-    
+
     if [[ -f "$item" ]]; then
       echo "f $item" >> "$output_file"
 
