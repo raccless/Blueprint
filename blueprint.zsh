@@ -189,17 +189,20 @@ elif [[ $1 == "file" ]]; then
     exit 1
   fi
 
-  # checks if the file exists or is empty
-  if [[ -f "$2" ]]; then
-  
-    while read line
-    do
-      processing_and_splitting "$line"
-    done < "$2"
-
-  else
-    echo "File $2 does not exist."
+  # checks if the file exists
+  if [[ ! -f "$2" ]]; then  
+     echo "File $2 does not exist."
+     exit 1
   fi
+
+  # -r keeps backslashes as they are
+  # the "|| [[ -n $line ]]" part makes sure the last line is read
+  # even when the file doesn't end with a new line
+  while read -r line || [[ -n "$line" ]]
+  do
+    processs_line "create" "$line"
+  done < "$2"
+
 
 elif [[ "$1" == "remove" ]]; then
 
@@ -208,31 +211,31 @@ elif [[ "$1" == "remove" ]]; then
     exit 1
   fi
 
-  if [[ -f "$2" ]]; then
-    lines=()
-
-    while read line
-    do
-      if [[ -n "$line" ]]; then
-        # this stores every blueprint line
-        lines+=("$line")
-      fi
-    done < "$2"
-
-    echo "Removing blueprint:"
-
-    index=${#lines[@]}
-
-    # removes the blueprint line in reverse order
-    while [[ $index -gt 0 ]]
-    do
-      processing_and_removing "${lines[$index]}"
-      ((index--))
-    done
-
-  else
-    echo "File $2 does not exist"
+  if [[ ! -f "$2" ]]; then
+    echo "File $2 does not exist."
+    exit 1
   fi
+
+  lines=()
+
+  while read -r line || [[ -n "$line" ]]
+  do
+    if [[ -n "$line" ]]; then
+      # this stores every blueprint line
+      lines+=("$line")
+    fi
+  done < "$2"
+
+  echo "Removing blueprint:"
+
+  index=${#lines[@]}
+
+  # removes the blueprint in reverse order
+  while [[ $index -gt 0 ]]
+  do
+    process_line "remove" "${lines[$index]}"
+    ((index--))
+  done
 
 
 elif [[ "$1" == "scan" ]]; then
